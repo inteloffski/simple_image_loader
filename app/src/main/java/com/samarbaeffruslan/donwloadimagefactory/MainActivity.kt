@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
+import com.samarbaeffruslan.donwloadimagefactory.core.presentation.NetworkImage
 import com.samarbaeffruslan.donwloadimagefactory.ui.theme.DonwloadImageFactoryTheme
 
 const val IMAGE_URL = "https://img.goodfon.ru/original/2880x1800/2/f9/lisa-zima-sneg-8.jpg"

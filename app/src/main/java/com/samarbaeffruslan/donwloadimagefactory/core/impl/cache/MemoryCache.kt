@@ -1,4 +1,4 @@
-package com.samarbaeffruslan.donwloadimagefactory
+package com.samarbaeffruslan.donwloadimagefactory.core.impl.cache
 
 import android.graphics.Bitmap
 import java.util.concurrent.ConcurrentHashMap

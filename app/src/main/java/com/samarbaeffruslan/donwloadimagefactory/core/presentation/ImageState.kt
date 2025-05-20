@@ -1,4 +1,4 @@
-package com.samarbaeffruslan.donwloadimagefactory
+package com.samarbaeffruslan.donwloadimagefactory.core.presentation
 
 import android.graphics.Bitmap
 
