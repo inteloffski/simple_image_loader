@@ -10,6 +10,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.ui.Modifier
 import com.samarbaeffruslan.donwloadimagefactory.ui.theme.DonwloadImageFactoryTheme
 
+const val IMAGE_URL = "https://img.goodfon.ru/original/2880x1800/2/f9/lisa-zima-sneg-8.jpg"
+
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -19,7 +21,7 @@ class MainActivity : ComponentActivity() {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
                     NetworkImage(
                         modifier = Modifier.padding(innerPadding),
-                        url = "https://img.goodfon.ru/original/2880x1800/2/f9/lisa-zima-sneg-8.jpg"
+                        url = IMAGE_URL
                     )
                 }
             }
