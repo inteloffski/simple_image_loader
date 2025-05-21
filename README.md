@@ -1,28 +1,103 @@
-# 📦 simple_image_loader
+# 🖼 Simple Image Loader
 
-**simple_image_loader** is a minimal image loading project for Android built with Kotlin Coroutines and Jetpack Compose. It’s designed as an **educational example** to demonstrate the core concepts of image loading, in-memory caching, and UI rendering **without relying on third-party libraries** like Coil, Glide, or Picasso.
-
-> ❗️ Not intended for production use — this is a demo implementation.
-
----
-
-## 🚀 Features
-
-- 🔄 Load images from a URL using `HttpURLConnection`
-- 💾 Simple in-memory cache (`ConcurrentHashMap`)
-- 🖼 `@Composable NetworkImage` component for rendering images
-- ⚠️ Basic error handling and state support (`loading`, `error`, `loaded`)
-- 📚 Clean and easy-to-read source code
+A simple and minimalistic image loader implementation for Android with Jetpack Compose support.  
+This project demonstrates the basic principles of image loading: downloading from the network, decoding, caching, and displaying.
 
 ---
 
-## 📷 Usage Example
+## 📌 Project Goals
+
+- Showcase how to build a custom image loader
+- Extensible architecture: easily plug in different HTTP clients (HttpURLConnection, Retrofit, Ktor)
+- Minimal dependencies
+- Simple integration with Jetpack Compose
+
+---
+
+## 🧱 Main Components
+
+### `ImageLoader`
+
+An interface that defines how an image should be downloaded and decoded.  
+Can have multiple implementations using different HTTP clients and decoders.
+
+**Responsibilities:**
+- Coordinates image byte fetching
+- Passes data to the decoder
+- Returns the result as `BitmapState`
+
+---
+
+### `HttpClientEngine`
+
+Interface for retrieving a `ByteArray` from a URL.
+
+**Implementation:**
+- `HttpUrlConnectionEngine` – based on the standard `HttpURLConnection`
+
+**Responsibilities:**
+- Performs the network request
+- Returns the raw image bytes
+
+---
+
+### `ImageDecoder<T>`
+
+An interface for decoding bytes into a specific image type (e.g., `Bitmap`, `Drawable`, or `GifDrawable`).
+
+**Implementation:**
+- `BitmapDecoder` – decodes JPEG/PNG into a `Bitmap`
+
+**Responsibilities:**
+- Validates the format
+- Decodes the image
+
+---
+
+### `MemoryCache`
+
+A simple in-memory cache based on `ConcurrentHashMap` that stores loaded images.
+
+**Responsibilities:**
+- Stores images in memory
+- Provides fast access without re-fetching
+
+---
+
+### `BitmapState`
+
+A state class that represents the result of the image loading process.
+
+- `Loading` – image is currently being loaded
+- `Error` – image failed to load
+- `Loaded(bitmap)` – image was successfully loaded
+- `Cached(bitmap)` – image was returned from memory cache
+
+---
+
+### `NetworkImage`
+
+A composable function for displaying an image from a URL, with support for:
+- Loading indicator
+- Error state
+- Final image rendering
+
+**Responsibilities:**
+- Manages image loading state
+- Calls `ImageLoader`
+- Displays the appropriate UI based on result
+
+---
+
+## 🚀 Example Usage
 
 ```kotlin
-NetworkImage(
-    url = "https://example.com/image.png",
-    modifier = Modifier.size(200.dp),
-    contentDescription = "Sample image",
-    loading = { CircularProgressIndicator() },
-    error = { Text("Image load failed") }
+@Composable  
+fun NetworkImage(  
+    url: String,  
+    modifier: Modifier = Modifier,  
+    contentDescription: String? = null,  
+    loader: ImageLoader<Bitmap> = DefaultImageLoader(),  
+    error: @Composable () -> Unit = { Text("Error") },  
+    loading: @Composable () -> Unit = { CircularProgressIndicator() }  
 )
